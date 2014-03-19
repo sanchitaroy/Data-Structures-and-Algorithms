@@ -1,0 +1,66 @@
+package adjacencyListImplementation;
+
+import java.io.File;
+import java.util.Scanner;
+
+/**
+ * @author 9570-7915
+ * reads input file and returns an array for the program
+ */
+
+public class InputAsArray {
+
+	static int nodes;
+	static int edges;
+
+	/**
+	 * @param code
+	 */
+	private static void err(int code) {
+		System.exit(code);
+	}
+
+	/**
+	 * @return inputAr : array of the vertices and length 
+	 */
+	public static int[][] inputAr(String fileNameAndPath){
+
+		int[][] inputAr;
+		Scanner sc = null; // compiler wants
+		int row = 0;
+		int num1 = 0, num2 = 0, len = 0;
+		try {
+			sc = new Scanner(new
+					File(fileNameAndPath)); // file
+		}
+		catch (Exception exception ) { err(1); }
+		if (sc.hasNextInt()){
+			nodes = sc.nextInt();
+		}
+		else err(2);
+		if (sc.hasNextInt()){
+			edges = sc.nextInt();
+		}
+		else err(2);
+		inputAr = new int[edges+2][3];
+		inputAr[row][0] = nodes;
+		inputAr[row][1] = edges;
+		inputAr[row][2] = 0;
+		row++;
+		while (sc.hasNextInt()) {
+			num1 = sc.nextInt();
+			if (sc.hasNextInt())
+				num2 = sc.nextInt();
+			else err(2);
+			if (sc.hasNextInt())
+				len = sc.nextInt();
+			else err(3);
+			inputAr[row][0] = num1;
+			inputAr[row][1] = num2;
+			inputAr[row][2] = len;
+			row++;
+		}
+		return inputAr;
+	}
+
+}

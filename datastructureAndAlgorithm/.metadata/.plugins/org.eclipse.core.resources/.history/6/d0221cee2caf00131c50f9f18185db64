@@ -1,0 +1,107 @@
+package randomGen;
+
+import java.util.*;
+
+/**
+ * @author 9570-7915
+ * generates a connected graph from random numbers representing edges
+ */
+public class RandomMatrixGen {
+
+	/*For testing purpose
+	 * public static void main(String args[]){	
+				getRandomMatrix();	
+	}*/
+
+	/**
+	 * @param nmNod : number of nodes
+	 * @param d : density
+	 * @param fileNameAndPath
+	 */
+	public static void getRandom(int nmNod, int d, String fileNameAndPath){
+		int adjmat[][]= new int[nmNod][nmNod];
+		StringBuilder strFileName = new StringBuilder();
+		//int fileCounter = 0;
+		double counter=0;
+		double dobD;
+		double dens=0;
+		int numNodes = 0;
+		boolean dfsFlag = false;
+		Random generator = new Random();
+		int arbNum1 = generator.nextInt(nmNod);
+		//int arbNum2 = generator.nextInt(nmNod);
+
+		dobD = d;
+		dens=Math.ceil((dobD/100)*10*10);
+
+		strFileName = strFileName.append("output");
+
+		for(int i=0;i<nmNod;i++)
+		{
+			for(int j=0;j<nmNod;j++)
+			{
+				adjmat[i][j]=-1;	
+			}
+		}
+		
+		//for(c=10;c<=100;c+=10){
+		while(!dfsFlag){
+
+			counter=0;
+			for(int i=0;i<nmNod;i++)
+			{
+				for(int j=0;j<nmNod;j++)
+				{
+					adjmat[i][j]=-1;	
+				}
+			}
+
+			while(counter!=dens){
+				int r = generator.nextInt(nmNod);
+				int s = generator.nextInt(nmNod);
+				int t = generator.nextInt(1000)+1;
+				if (adjmat[r][s]== -1)
+				{
+					adjmat[r][s]=t;
+					counter++;
+				}
+
+			}
+			
+			// This is made to ensure a connected graph always
+			// to reduce running time 
+			// (done for testing. Can be removed further) 
+			for(int i=0;i<nmNod;i++)
+			{
+				adjmat[0][i]=arbNum1;
+				arbNum1++;
+			}
+
+			DFSCheck dfsnew = new DFSCheck(adjmat,nmNod);
+			if(dfsnew.dfCheck(0, nmNod)){
+
+				System.out.println("DFS");
+				System.out.println("-----------------------------------");
+				System.out.println("        For DENSITY = " + dens+"%"+" counter: "+counter);
+				System.out.println("-----------------------------------");
+				for(int m=0;m<nmNod;m++)
+				{
+					for(int n=0;n<nmNod;n++)
+					{
+						System.out.print(adjmat[m][n]+ "  ");
+					}
+					System.out.println();
+				}
+				numNodes = adjmat.length;
+				OutputAdjacencyToFile.writeToFile(adjmat, numNodes, fileNameAndPath);
+
+				dfsFlag = true;
+			}else{
+				System.out.println("NOT DFS:"+dens+"%");
+				//c=c-10;
+			}
+			//dfsnew.setMatrixNodes(adjmat[10][10],10);*/
+		}
+	}
+}
+

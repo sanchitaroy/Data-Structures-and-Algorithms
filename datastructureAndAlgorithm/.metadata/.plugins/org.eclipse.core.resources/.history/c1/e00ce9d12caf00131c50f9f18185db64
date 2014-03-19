@@ -1,0 +1,17 @@
+package adjacencyListImplementation;
+
+import randomGen.*;
+
+/**
+ * @author 9570-7915
+ * runs the simple scheme for prims algorithm using adjacency list in O(N^2)
+ * This file is for testing purpose. Run MST.java otherwise
+ */
+public class SimpleSchemeMain {
+
+	public static void main(String args[]){	
+		RandomMatrixGen.getRandom(10, 10, "/home/output.txt");
+		GraphReprAndSimpleScheme.getGraphAndPrim("/home/output.txt");
+	}
+
+}
